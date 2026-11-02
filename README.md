@@ -1,7 +1,6 @@
 # X-Vector Cursor
 
-A minimal eight-point star cursor for your desktop environment, with enough
-two-tone contrast to stay readable on white pages.
+A minimal eight-point star cursor for your desktop environment, with W/B-tone contrast to stay readable on white pages.
 
 <p align="center">
   <img src="previews/x-vector-black.png" width="160" alt="X-Vector on black">
