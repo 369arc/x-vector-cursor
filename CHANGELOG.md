@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0 — 2026-11-02
+
+- Added a Linux setup guide for Hyprland, GNOME, Cinnamon, MATE, XFCE,
+  KDE Plasma, generic X11, GTK and Flatpak.
+- Added a Windows `.cur` package with a PowerShell installer.
+- Added macOS Mousecape `.cape` packages for both variants.
+- `build.sh` now regenerates the Linux, Windows and macOS assets.
+
 ## 1.2.0 — 2026-11-02
 
 - Added **X-Vector-Inverse**: a black 1 px core with a white 1 px outline for

@@ -45,12 +45,25 @@ The text cursor is a three-stripe vertical sandwich, 8 px shorter than the
 nominal cursor. `X-Vector` uses black-white-black; the inverse uses
 white-black-white. Both survive dark and light input fields.
 
+## Platforms
+
+| Platform | Format | Guide |
+| --- | --- | --- |
+| Linux | XCursor | [Linux setup](docs/linux.md) |
+| Windows | `.cur` + PowerShell installer | [Windows setup](platforms/windows/README.md) |
+| macOS | Mousecape `.cape` | [macOS setup](platforms/macos/README.md) |
+
+X-Vector is native on Linux. Windows and macOS use converted formats generated
+from the same star geometry.
+
 ## Release
 
-Current version: **1.2.0** — added the inverse variant.
+Current version: **1.3.0** — added Linux, Windows and macOS setup guides.
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Install
+
+### Linux
 
 The generated XCursor themes are committed, so Python is only needed when
 rebuilding.
@@ -61,37 +74,23 @@ cd x-vector-cursor
 ./install.sh
 ```
 
-The script copies both themes to `${XDG_DATA_HOME:-$HOME/.local/share}/icons`
-and applies `X-Vector` for the current Hyprland session when `hyprctl` is
-available. To apply the inverse instead:
+The script installs both variants and applies `X-Vector`. To apply the inverse:
 
 ```bash
 ./install.sh X-Vector-Inverse
 ```
 
-### Hyprland
+For Hyprland, GNOME, KDE Plasma, XFCE, Cinnamon, MATE, generic X11, GTK and
+Flatpak instructions, see [docs/linux.md](docs/linux.md).
 
-```ini
-env = XCURSOR_THEME,X-Vector
-env = XCURSOR_SIZE,28
-env = HYPRCURSOR_THEME,X-Vector
-env = HYPRCURSOR_SIZE,28
-```
+### Windows
 
-Or apply immediately:
+Windows cannot load XCursor themes. Use the generated `.cur` package and the
+PowerShell installer: [platforms/windows/README.md](platforms/windows/README.md).
 
-```bash
-hyprctl setcursor X-Vector 28
-```
+### macOS
 
-Use `X-Vector-Inverse` in place of `X-Vector` for the light-desktop variant.
-
-### GTK
-
-```bash
-gsettings set org.gnome.desktop.interface cursor-theme 'X-Vector'
-gsettings set org.gnome.desktop.interface cursor-size 28
-```
+macOS needs a Mousecape cape: [platforms/macos/README.md](platforms/macos/README.md).
 
 ## Build
 
@@ -101,8 +100,8 @@ Requires Python 3 (no external Python packages).
 ./build.sh
 ```
 
-This regenerates `themes/X-Vector` and `themes/X-Vector-Inverse` from the
-script in `src/`.
+This regenerates both XCursor themes and the Windows/macOS assets in
+`platforms/`.
 
 ## Uninstall
 
@@ -110,7 +109,8 @@ script in `src/`.
 ./uninstall.sh
 ```
 
-Then switch to another theme with `hyprctl setcursor` / your environment.
+This removes the Linux themes. See the Windows and macOS guides for their
+uninstall steps.
 
 ## License
 
