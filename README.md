@@ -23,21 +23,12 @@ The black outline disappears on a black background, leaving a white star.
 On white it makes the star visible as a black outline. On mid-gray both
 layers are visible — the unavoidable compromise of a two-tone cursor.
 
-`X-Vector-Crosshair` is included as a lighter fallback: four white axes with
-a 14 px black X.
-
-<p align="center">
-  <img src="previews/x-vector-crosshair-black.png" width="160" alt="X-Vector Crosshair on black">
-  <img src="previews/x-vector-crosshair-white.png" width="160" alt="X-Vector Crosshair on white">
-  <img src="previews/x-vector-crosshair-gray.png" width="160" alt="X-Vector Crosshair on gray">
-</p>
-
 The text cursor is a black-white-black vertical sandwich, 8 px shorter than
 the nominal cursor, so it survives both dark and light input fields.
 
 ## Install
 
-The generated XCursor themes are committed, so Python is only needed when
+The generated XCursor theme is committed, so Python is only needed when
 rebuilding.
 
 ```bash
@@ -46,7 +37,7 @@ cd x-vector-star-cursor
 ./install.sh
 ```
 
-The script copies both themes to `${XDG_DATA_HOME:-$HOME/.local/share}/icons`
+The script copies the theme to `${XDG_DATA_HOME:-$HOME/.local/share}/icons`
 and applies `X-Vector-Star` for the current Hyprland session when `hyprctl`
 is available.
 
@@ -80,8 +71,7 @@ Requires Python 3 (no external Python packages).
 ./build.sh
 ```
 
-This regenerates `themes/X-Vector-Star` and `themes/X-Vector-Crosshair`
-from the scripts in `src/`.
+This regenerates `themes/X-Vector-Star` from the script in `src/`.
 
 ## Uninstall
 
