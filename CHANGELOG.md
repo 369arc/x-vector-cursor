@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 — 2026-11-02
+
+- Added **X-Vector-Inverse**: a black 1 px core with a white 1 px outline for
+  light desktops.
+- `install.sh` now installs both variants and accepts `X-Vector` or
+  `X-Vector-Inverse` as an argument.
+
 ## 1.1.0 — 2026-11-02
 
 - Fixed the missing black outline on the south and east edges.

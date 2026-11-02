@@ -1,31 +1,59 @@
 #!/usr/bin/env python3
-"""Generate the X-Vector XCursor theme.
+"""Generate the X-Vector XCursor themes.
 
 Eight-point star:
-  - main vertical/horizontal axes: size - 2 px;
+  - main vertical/horizontal axes: size - 4 px;
   - diagonals: half the cursor size;
-  - white 1 px core + black 1 px outline;
-  - text cursor: black/white/black vertical sandwich, 8 px shorter.
+  - 1 px core + 1 px outline in opposite tones;
+  - text cursor: a three-stripe vertical sandwich, 8 px shorter.
 No motion trail or click animation: XCursor cannot do that.
+
+Usage:
+  python3 make_x_vector.py X-Vector
+  python3 make_x_vector.py X-Vector-Inverse
 """
 
 from __future__ import annotations
 
+import argparse
+import os
 import shutil
 import struct
 import sys
-import os
+from dataclasses import dataclass
 from pathlib import Path
 
 CURSOR_OUTPUT = Path(os.environ.get("CURSOR_OUTPUT", str(Path.home() / ".local/share/icons")))
-THEME = CURSOR_OUTPUT / "X-Vector"
-CURSORS = THEME / "cursors"
 SIZES = (24, 28, 32, 48, 64)
 
 MAGIC = 0x72756358
 IMAGE_TYPE = 0xFFFD0002
 WHITE = b"\xff\xff\xff\xff"
 BLACK = b"\x00\x00\x00\xff"
+
+
+@dataclass(frozen=True)
+class Variant:
+    core: bytes
+    outline: bytes
+    text: tuple[bytes, bytes, bytes]
+    comment: str
+
+
+VARIANTS = {
+    "X-Vector": Variant(
+        core=WHITE,
+        outline=BLACK,
+        text=(BLACK, WHITE, BLACK),
+        comment="White eight-point star with black outline",
+    ),
+    "X-Vector-Inverse": Variant(
+        core=BLACK,
+        outline=WHITE,
+        text=(WHITE, BLACK, WHITE),
+        comment="Black eight-point star with white outline",
+    ),
+}
 
 
 def blank(size: int) -> bytearray:
@@ -60,7 +88,7 @@ def line(buf: bytearray, size: int, x0: int, y0: int, x1: int, y1: int,
             y0 += sy
 
 
-def star_image(size: int) -> bytearray:
+def star_image(size: int, core: bytes, outline: bytes) -> bytearray:
     buf = blank(size)
     c = size // 2
     main = size - 4
@@ -75,27 +103,28 @@ def star_image(size: int) -> bytearray:
         ((c - dh, c + dh), (c + dh, c - dh)),  # diagonal
     ]
 
-    # black outline first, then white core
+    # Outline first, then the core on top.
     for a, b in arms:
-        line(buf, size, a[0], a[1], b[0], b[1], BLACK, thickness=3)
+        line(buf, size, a[0], a[1], b[0], b[1], outline, thickness=3)
     for a, b in arms:
-        line(buf, size, a[0], a[1], b[0], b[1], WHITE, thickness=1)
+        line(buf, size, a[0], a[1], b[0], b[1], core, thickness=1)
     return buf
 
 
-def text_image(canvas: int = 28) -> bytearray:
+def text_image(colors: tuple[bytes, bytes, bytes], canvas: int = 28) -> bytearray:
+    left, middle, right = colors
     buf = blank(canvas)
     c = canvas // 2
     top = 4
     bottom = canvas - 5
     for y in range(top, bottom + 1):
-        put(buf, canvas, c - 1, y, BLACK)
-        put(buf, canvas, c, y, WHITE)
-        put(buf, canvas, c + 1, y, BLACK)
+        put(buf, canvas, c - 1, y, left)
+        put(buf, canvas, c, y, middle)
+        put(buf, canvas, c + 1, y, right)
     return buf
 
 
-def not_allowed_image(size: int) -> bytearray:
+def not_allowed_image(size: int, color: bytes) -> bytearray:
     buf = blank(size)
     c = size / 2.0
     r = size * 0.30
@@ -104,11 +133,11 @@ def not_allowed_image(size: int) -> bytearray:
             dx, dy = x - c + 0.5, y - c + 0.5
             d = (dx * dx + dy * dy) ** 0.5
             if abs(d - r) < 0.7:
-                put(buf, size, x, y, WHITE)
+                put(buf, size, x, y, color)
     for i in range(size):
         x = round(c - r / 2**0.5 + i * (r * 2**0.5) / size)
         y = round(c - r / 2**0.5 + i * (r * 2**0.5) / size)
-        put(buf, size, x, y, WHITE)
+        put(buf, size, x, y, color)
     return buf
 
 
@@ -129,33 +158,16 @@ def xcursor(images: list[tuple[int, int, int, bytearray]]) -> bytes:
     return struct.pack("<IIII", MAGIC, 16, 0x00010000, ntoc) + bytes(toc + chunks)
 
 
-def write_cursor(name: str, factory, special: bool = False) -> None:
+def write_cursor(cursors: Path, name: str, factory, special: bool = False) -> None:
     if special:
         pixels = factory(28)
         images = [(s, 28, 28, pixels) for s in SIZES]
     else:
         images = [(s, s, s, factory(s)) for s in SIZES]
-    (CURSORS / name).write_bytes(xcursor(images))
+    (cursors / name).write_bytes(xcursor(images))
 
 
-def main() -> int:
-    if THEME.exists():
-        shutil.rmtree(THEME)
-    CURSORS.mkdir(parents=True)
-    (THEME / "index.theme").write_text(
-        "[Icon Theme]\nName=X-Vector\n"
-        "Comment=Eight-point star cursor for a black desktop\n"
-        "Inherits=hicolor\n"
-    )
-    (THEME / "cursor.theme").write_text(
-        "[Icon Theme]\nName=X-Vector\nInherits=hicolor\n"
-    )
-
-    write_cursor("default", star_image)
-    write_cursor("pointer", star_image)
-    write_cursor("text", text_image, special=True)
-    write_cursor("not-allowed", not_allowed_image)
-
+def populate_aliases(cursors: Path) -> None:
     aliases = {
         "left_ptr": "default", "arrow": "default", "top_left_arrow": "default",
         "crosshair": "default", "cross": "default", "cell": "default",
@@ -175,16 +187,48 @@ def main() -> int:
         "no-drop": "not-allowed", "forbidden": "not-allowed",
     }
     for alias, target in aliases.items():
-        link = CURSORS / alias
+        link = cursors / alias
         try:
             link.symlink_to(target)
         except FileExistsError:
             link.unlink()
             link.symlink_to(target)
 
-    print(f"created {THEME} with {len(list(CURSORS.iterdir()))} cursors")
+
+def main(theme_name: str) -> int:
+    variant = VARIANTS[theme_name]
+    theme = CURSOR_OUTPUT / theme_name
+    cursors = theme / "cursors"
+
+    if theme.exists():
+        shutil.rmtree(theme)
+    cursors.mkdir(parents=True)
+
+    (theme / "index.theme").write_text(
+        f"[Icon Theme]\nName={theme_name}\n"
+        f"Comment={variant.comment}\n"
+        "Inherits=hicolor\n"
+    )
+    (theme / "cursor.theme").write_text(
+        f"[Icon Theme]\nName={theme_name}\nInherits=hicolor\n"
+    )
+
+    write_cursor(cursors, "default", lambda s: star_image(s, variant.core, variant.outline))
+    write_cursor(cursors, "pointer", lambda s: star_image(s, variant.core, variant.outline))
+    write_cursor(cursors, "text", lambda s: text_image(variant.text, s), special=True)
+    write_cursor(cursors, "not-allowed", lambda s: not_allowed_image(s, variant.core))
+
+    populate_aliases(cursors)
+
+    print(f"created {theme} with {len(list(cursors.iterdir()))} cursors")
     return 0
 
 
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate X-Vector XCursor themes.")
+    parser.add_argument("theme", nargs="?", default="X-Vector", choices=VARIANTS)
+    return parser.parse_args(argv)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(parse_args(sys.argv[1:]).theme))

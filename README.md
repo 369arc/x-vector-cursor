@@ -3,10 +3,24 @@
 A minimal eight-point star cursor for your desktop environment.<br>
 B/W tone contrast to stay readable on black and white pages.
 
+## Variants
+
+**X-Vector** — white core, black outline. Built for dark desktops; the outline
+keeps it readable on light pages.
+
 <p align="center">
   <img src="previews/x-vector-black.png" width="160" alt="X-Vector on black">
   <img src="previews/x-vector-white.png" width="160" alt="X-Vector on white">
   <img src="previews/x-vector-gray.png" width="160" alt="X-Vector on gray">
+</p>
+
+**X-Vector-Inverse** — black core, white outline. Built for light desktops;
+the outline keeps it readable on dark pages.
+
+<p align="center">
+  <img src="previews/x-vector-inverse-black.png" width="160" alt="X-Vector-Inverse on black">
+  <img src="previews/x-vector-inverse-white.png" width="160" alt="X-Vector-Inverse on white">
+  <img src="previews/x-vector-inverse-gray.png" width="160" alt="X-Vector-Inverse on gray">
 </p>
 
 Preview tiles use a 36×36 canvas: the 28 px cursor plus 4 px breathing room on every side.
@@ -16,26 +30,29 @@ Preview tiles use a 36×36 canvas: the 28 px cursor plus 4 px breathing room on 
 - **28 px** nominal size.
 - Four main axes: **24 px** at the 28 px size (2 px margin on every side for the outline).
 - Four diagonals: **14 px**.
-- White **1 px** core; black **1 px** outline.
+- `X-Vector`: white **1 px** core; black **1 px** outline.
+- `X-Vector-Inverse`: black **1 px** core; white **1 px** outline.
 - No centre dot.
 - Static XCursor; no motion trail and no per-click animation (XCursor cannot
   receive global mouse-button events).
 
-The black outline disappears on a black background, leaving a white star.
-On white it makes the star visible as a black outline. On mid-gray both
-layers are visible — the unavoidable compromise of a two-tone cursor.
+Each variant is a two-tone cursor. On a matching background one layer
+disappears, while the other keeps the star visible. `X-Vector` favors dark
+desktops; `X-Vector-Inverse` favors light ones. On mid-gray both layers are
+visible — the unavoidable compromise of a two-tone cursor.
 
-The text cursor is a black-white-black vertical sandwich, 8 px shorter than
-the nominal cursor, so it survives both dark and light input fields.
+The text cursor is a three-stripe vertical sandwich, 8 px shorter than the
+nominal cursor. `X-Vector` uses black-white-black; the inverse uses
+white-black-white. Both survive dark and light input fields.
 
 ## Release
 
-Current version: **1.1.0** — fixed star outline on all four sides.
+Current version: **1.2.0** — added the inverse variant.
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Install
 
-The generated XCursor theme is committed, so Python is only needed when
+The generated XCursor themes are committed, so Python is only needed when
 rebuilding.
 
 ```bash
@@ -44,9 +61,13 @@ cd x-vector-cursor
 ./install.sh
 ```
 
-The script copies the theme to `${XDG_DATA_HOME:-$HOME/.local/share}/icons`
-and applies `X-Vector` for the current Hyprland session when `hyprctl`
-is available.
+The script copies both themes to `${XDG_DATA_HOME:-$HOME/.local/share}/icons`
+and applies `X-Vector` for the current Hyprland session when `hyprctl` is
+available. To apply the inverse instead:
+
+```bash
+./install.sh X-Vector-Inverse
+```
 
 ### Hyprland
 
@@ -63,6 +84,8 @@ Or apply immediately:
 hyprctl setcursor X-Vector 28
 ```
 
+Use `X-Vector-Inverse` in place of `X-Vector` for the light-desktop variant.
+
 ### GTK
 
 ```bash
@@ -78,7 +101,8 @@ Requires Python 3 (no external Python packages).
 ./build.sh
 ```
 
-This regenerates `themes/X-Vector` from the script in `src/`.
+This regenerates `themes/X-Vector` and `themes/X-Vector-Inverse` from the
+script in `src/`.
 
 ## Uninstall
 
