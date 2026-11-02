@@ -1,13 +1,15 @@
-# X-Vector Star Cursor
+# X-Vector Cursor
 
 A minimal eight-point star cursor for a pure-black desktop, with enough
 two-tone contrast to stay readable on white pages.
 
 <p align="center">
-  <img src="previews/x-vector-star-black.png" width="160" alt="X-Vector Star on black">
-  <img src="previews/x-vector-star-white.png" width="160" alt="X-Vector Star on white">
-  <img src="previews/x-vector-star-gray.png" width="160" alt="X-Vector Star on gray">
+  <img src="previews/x-vector-black.png" width="160" alt="X-Vector on black">
+  <img src="previews/x-vector-white.png" width="160" alt="X-Vector on white">
+  <img src="previews/x-vector-gray.png" width="160" alt="X-Vector on gray">
 </p>
+
+Preview tiles use a 36×36 canvas: the 28 px cursor plus 4 px breathing room on every side.
 
 ## Design
 
@@ -32,34 +34,34 @@ The generated XCursor theme is committed, so Python is only needed when
 rebuilding.
 
 ```bash
-git clone https://github.com/369arc/x-vector-star-cursor.git
-cd x-vector-star-cursor
+git clone https://github.com/369arc/x-vector-cursor.git
+cd x-vector-cursor
 ./install.sh
 ```
 
 The script copies the theme to `${XDG_DATA_HOME:-$HOME/.local/share}/icons`
-and applies `X-Vector-Star` for the current Hyprland session when `hyprctl`
+and applies `X-Vector` for the current Hyprland session when `hyprctl`
 is available.
 
 ### Hyprland
 
 ```ini
-env = XCURSOR_THEME,X-Vector-Star
+env = XCURSOR_THEME,X-Vector
 env = XCURSOR_SIZE,28
-env = HYPRCURSOR_THEME,X-Vector-Star
+env = HYPRCURSOR_THEME,X-Vector
 env = HYPRCURSOR_SIZE,28
 ```
 
 Or apply immediately:
 
 ```bash
-hyprctl setcursor X-Vector-Star 28
+hyprctl setcursor X-Vector 28
 ```
 
 ### GTK
 
 ```bash
-gsettings set org.gnome.desktop.interface cursor-theme 'X-Vector-Star'
+gsettings set org.gnome.desktop.interface cursor-theme 'X-Vector'
 gsettings set org.gnome.desktop.interface cursor-size 28
 ```
 
@@ -71,7 +73,7 @@ Requires Python 3 (no external Python packages).
 ./build.sh
 ```
 
-This regenerates `themes/X-Vector-Star` from the script in `src/`.
+This regenerates `themes/X-Vector` from the script in `src/`.
 
 ## Uninstall
 

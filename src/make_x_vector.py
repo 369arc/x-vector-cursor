@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the X-Vector-Star XCursor theme.
+"""Generate the X-Vector XCursor theme.
 
 Eight-point star:
   - main vertical/horizontal axes: size - 2 px;
@@ -18,7 +18,7 @@ import os
 from pathlib import Path
 
 CURSOR_OUTPUT = Path(os.environ.get("CURSOR_OUTPUT", str(Path.home() / ".local/share/icons")))
-THEME = CURSOR_OUTPUT / "X-Vector-Star"
+THEME = CURSOR_OUTPUT / "X-Vector"
 CURSORS = THEME / "cursors"
 SIZES = (24, 28, 32, 48, 64)
 
@@ -143,12 +143,12 @@ def main() -> int:
         shutil.rmtree(THEME)
     CURSORS.mkdir(parents=True)
     (THEME / "index.theme").write_text(
-        "[Icon Theme]\nName=X-Vector-Star\n"
+        "[Icon Theme]\nName=X-Vector\n"
         "Comment=Eight-point star cursor for a black desktop\n"
         "Inherits=hicolor\n"
     )
     (THEME / "cursor.theme").write_text(
-        "[Icon Theme]\nName=X-Vector-Star\nInherits=hicolor\n"
+        "[Icon Theme]\nName=X-Vector\nInherits=hicolor\n"
     )
 
     write_cursor("default", star_image)
