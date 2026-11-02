@@ -1,6 +1,6 @@
 # X-Vector Cursor
 
-A minimal eight-point star cursor for a pure-black desktop, with enough
+A minimal eight-point star cursor for your desktop environment, with enough
 two-tone contrast to stay readable on white pages.
 
 <p align="center">
