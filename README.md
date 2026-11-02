@@ -28,6 +28,11 @@ layers are visible — the unavoidable compromise of a two-tone cursor.
 The text cursor is a black-white-black vertical sandwich, 8 px shorter than
 the nominal cursor, so it survives both dark and light input fields.
 
+## Release
+
+Current version: **1.1.0** — fixed star outline on all four sides.
+See [CHANGELOG.md](CHANGELOG.md) for details.
+
 ## Install
 
 The generated XCursor theme is committed, so Python is only needed when
