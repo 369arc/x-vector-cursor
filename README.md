@@ -59,6 +59,7 @@ from the same star geometry.
 ## Release
 
 Current version: **1.3.0** — added Linux, Windows and macOS setup guides.
+Older releases are deprecated; use the latest one.
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Install
