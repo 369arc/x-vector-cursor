@@ -63,7 +63,7 @@ def line(buf: bytearray, size: int, x0: int, y0: int, x1: int, y1: int,
 def star_image(size: int) -> bytearray:
     buf = blank(size)
     c = size // 2
-    main = size - 2
+    main = size - 4
     diag = max(8, size // 2)
     mh = main // 2
     dh = diag // 2

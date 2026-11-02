@@ -14,7 +14,7 @@ Preview tiles use a 36×36 canvas: the 28 px cursor plus 4 px breathing room on 
 ## Design
 
 - **28 px** nominal size.
-- Four main axes: **26 px** (1 px margin for the outline).
+- Four main axes: **24 px** at the 28 px size (2 px margin on every side for the outline).
 - Four diagonals: **14 px**.
 - White **1 px** core; black **1 px** outline.
 - No centre dot.
