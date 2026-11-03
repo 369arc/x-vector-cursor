@@ -11,6 +11,8 @@ No motion trail or click animation: XCursor cannot do that.
 Usage:
   python3 make_x_vector.py X-Vector
   python3 make_x_vector.py X-Vector-Inverse
+  python3 make_x_vector.py X-Vector-Meta
+  python3 make_x_vector.py X-Vector-Meta-Inverse
 """
 
 from __future__ import annotations
@@ -286,8 +288,12 @@ def main(theme_name: str) -> int:
         f"[Icon Theme]\nName={theme_name}\nInherits=hicolor\n"
     )
 
-    write_cursor(cursors, "default", lambda s: star_image(s, variant.core, variant.outline))
-    write_cursor(cursors, "pointer", lambda s: star_image(s, variant.core, variant.outline))
+    write_cursor(cursors, "default",
+                 lambda s: star_image(s, variant.core, variant.outline,
+                                      variant.geometry))
+    write_cursor(cursors, "pointer",
+                 lambda s: star_image(s, variant.core, variant.outline,
+                                      variant.geometry))
     write_cursor(cursors, "text", lambda s: text_image(variant.text, s), special=True)
     write_cursor(cursors, "not-allowed", lambda s: not_allowed_image(s, variant.core))
 
