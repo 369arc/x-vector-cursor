@@ -3,10 +3,12 @@
 Windows does not read Linux XCursor themes. This folder contains the same
 eight-point star converted to Windows `.cur` files.
 
-Both variants are included:
+All four variants are included:
 
 - `X-Vector` — white core, black outline;
-- `X-Vector-Inverse` — black core, white outline.
+- `X-Vector-Inverse` — black core, white outline;
+- `X-Vector-Meta` — rhombic axes, white core, black outline;
+- `X-Vector-Meta-Inverse` — rhombic axes, black core, white outline.
 
 ## Quick install
 
@@ -17,10 +19,12 @@ Both variants are included:
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
-For the inverse variant:
+For another variant:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Inverse
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta-Inverse
 ```
 
 The script copies the cursors to `%LOCALAPPDATA%\X-Vector\Cursors` and sets
@@ -47,8 +51,8 @@ Windows resize arrows remain in place.
 ## Manual install
 
 Open **Settings → Bluetooth & devices → Mouse → Additional mouse settings →
-Pointers**. Select a role, click **Browse**, and choose the matching `.cur`
-file from `platforms\windows\X-Vector` (or `X-Vector-Inverse`).
+Pointers**. Select a role, click **Browse**, and choose the `.cur` file from
+the folder of the variant you want in `platforms\windows`.
 
 Use `text.cur` for text select and `not-allowed.cur` for unavailable. All other
 star roles use `default.cur`.

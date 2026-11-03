@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export CURSOR_OUTPUT="$ROOT/themes"
 
-for theme in X-Vector X-Vector-Inverse; do
+for theme in X-Vector X-Vector-Inverse X-Vector-Meta X-Vector-Meta-Inverse; do
   python3 "$ROOT/src/make_x_vector.py" "$theme"
 done
 python3 "$ROOT/src/make_platform_assets.py"

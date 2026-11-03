@@ -6,16 +6,16 @@ DEST="${XDG_DATA_HOME:-$HOME/.local/share}/icons"
 THEME="${1:-X-Vector}"
 
 case "$THEME" in
-  X-Vector|X-Vector-Inverse) ;;
+  X-Vector|X-Vector-Inverse|X-Vector-Meta|X-Vector-Meta-Inverse) ;;
   *)
     echo "Unknown theme: $THEME" >&2
-    echo "Use X-Vector or X-Vector-Inverse." >&2
+    echo "Use X-Vector, X-Vector-Inverse, X-Vector-Meta or X-Vector-Meta-Inverse." >&2
     exit 1
     ;;
 esac
 
 install -d "$DEST"
-for variant in X-Vector X-Vector-Inverse; do
+for variant in X-Vector X-Vector-Inverse X-Vector-Meta X-Vector-Meta-Inverse; do
   rm -rf "$DEST/$variant"
   cp -a "$ROOT/themes/$variant" "$DEST/$variant"
   echo "Installed $DEST/$variant"

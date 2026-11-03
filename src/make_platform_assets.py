@@ -137,7 +137,8 @@ def make_windows() -> None:
         for old in folder.glob("*.cur"):
             old.unlink()
 
-        star = [(size, star_image(size, variant.core, variant.outline))
+        star = [(size, star_image(size, variant.core, variant.outline,
+                                  variant.geometry))
                 for size in WINDOWS_SIZES]
         text_source = text_image(variant.text, 28)
         text = [(size, scale_to(text_source, 28, size)) for size in WINDOWS_SIZES]
@@ -169,7 +170,8 @@ def macos_cursor(pixels: bytearray, points: int, hotspot: int) -> dict:
 def make_macos() -> None:
     for name, variant in VARIANTS.items():
         star = macos_cursor(
-            star_image(MACOS_POINTS, variant.core, variant.outline),
+            star_image(MACOS_POINTS, variant.core, variant.outline,
+                       variant.geometry),
             MACOS_POINTS,
             MACOS_HOTSPOT,
         )

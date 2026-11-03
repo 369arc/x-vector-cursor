@@ -38,6 +38,7 @@ class Variant:
     outline: bytes
     text: tuple[bytes, bytes, bytes]
     comment: str
+    geometry: str = "classic"
 
 
 VARIANTS = {
@@ -52,6 +53,20 @@ VARIANTS = {
         outline=WHITE,
         text=(WHITE, BLACK, WHITE),
         comment="Black eight-point star with white outline",
+    ),
+    "X-Vector-Meta": Variant(
+        core=WHITE,
+        outline=BLACK,
+        text=(BLACK, WHITE, BLACK),
+        comment="White eight-point star with rhombic axes and black outline",
+        geometry="meta",
+    ),
+    "X-Vector-Meta-Inverse": Variant(
+        core=BLACK,
+        outline=WHITE,
+        text=(WHITE, BLACK, WHITE),
+        comment="Black eight-point star with rhombic axes and white outline",
+        geometry="meta",
     ),
 }
 
@@ -88,7 +103,10 @@ def line(buf: bytearray, size: int, x0: int, y0: int, x1: int, y1: int,
             y0 += sy
 
 
-def star_image(size: int, core: bytes, outline: bytes) -> bytearray:
+def star_image(size: int, core: bytes, outline: bytes,
+               geometry: str = "classic") -> bytearray:
+    if geometry == "meta":
+        return meta_image(size, core, outline)
     buf = blank(size)
     c = size // 2
     main = size - 4
@@ -108,6 +126,61 @@ def star_image(size: int, core: bytes, outline: bytes) -> bytearray:
         line(buf, size, a[0], a[1], b[0], b[1], outline, thickness=3)
     for a, b in arms:
         line(buf, size, a[0], a[1], b[0], b[1], core, thickness=1)
+    return buf
+
+
+def meta_image(size: int, core: bytes, outline: bytes) -> bytearray:
+    """Eight-point star with rhombic horizontal and vertical axes.
+
+    The diagonals are the classic X staircase. The axial cores are chains of
+    whole-pixel rhombi: at 28 px a rotated 1x1 square is smaller than one
+    pixel, so it would average to gray, while |dx| + |dy| <= 1 is the smallest
+    rhombus that stays solid. The centre is the union of a square and a
+    rhombus, an eight-point figure.
+    """
+    buf = blank(size)
+    c = size // 2
+    mh = (size - 4) // 2
+    dh = max(8, size // 2) // 2
+    scale = size / 28.0
+
+    def scaled(value: int, minimum: int) -> int:
+        return max(minimum, round(value * scale))
+
+    center_sq = scaled(1, 1)
+    center_dia = scaled(2, 2)
+    bead_r = scaled(1, 1)
+    step = scaled(3, 3)
+    first = center_dia + bead_r + 2
+    last = mh - bead_r
+
+    def square(cx: int, cy: int, r: int, color: bytes) -> None:
+        for y in range(cy - r, cy + r + 1):
+            for x in range(cx - r, cx + r + 1):
+                put(buf, size, x, y, color)
+
+    def diamond(cx: int, cy: int, r: int, color: bytes) -> None:
+        for y in range(cy - r, cy + r + 1):
+            for x in range(cx - r, cx + r + 1):
+                if abs(x - cx) + abs(y - cy) <= r:
+                    put(buf, size, x, y, color)
+
+    # Outline first, then the core on top.
+    line(buf, size, c - dh, c - dh, c + dh, c + dh, outline, thickness=3)
+    line(buf, size, c - dh, c + dh, c + dh, c - dh, outline, thickness=3)
+    square(c, c, center_sq + 1, outline)
+    diamond(c, c, center_dia + 1, outline)
+    for d in range(first, last + 1, step):
+        for sx, sy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            diamond(c + sx * d, c + sy * d, bead_r + 1, outline)
+
+    line(buf, size, c - dh, c - dh, c + dh, c + dh, core, thickness=1)
+    line(buf, size, c - dh, c + dh, c + dh, c - dh, core, thickness=1)
+    square(c, c, center_sq, core)
+    diamond(c, c, center_dia, core)
+    for d in range(first, last + 1, step):
+        for sx, sy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            diamond(c + sx * d, c + sy * d, bead_r, core)
     return buf
 
 

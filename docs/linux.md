@@ -12,14 +12,16 @@ cd x-vector-cursor
 ./install.sh
 ```
 
-This installs both variants to
+This installs all four variants to
 `${XDG_DATA_HOME:-$HOME/.local/share}/icons` and applies `X-Vector` in the
 current Hyprland session when `hyprctl` is available.
 
-To apply the inverse variant:
+To apply another variant:
 
 ```bash
 ./install.sh X-Vector-Inverse
+./install.sh X-Vector-Meta
+./install.sh X-Vector-Meta-Inverse
 ```
 
 Some older applications only look in the legacy `~/.icons` directory. If a
@@ -28,8 +30,9 @@ program does not see the theme, add symlinks:
 ```bash
 ICONS="${XDG_DATA_HOME:-$HOME/.local/share}/icons"
 mkdir -p ~/.icons
-ln -sfn "$ICONS/X-Vector" ~/.icons/X-Vector
-ln -sfn "$ICONS/X-Vector-Inverse" ~/.icons/X-Vector-Inverse
+for theme in X-Vector X-Vector-Inverse X-Vector-Meta X-Vector-Meta-Inverse; do
+  ln -sfn "$ICONS/$theme" ~/.icons/$theme
+done
 ```
 
 ## Hyprland
@@ -43,7 +46,8 @@ env = HYPRCURSOR_THEME,X-Vector
 env = HYPRCURSOR_SIZE,28
 ```
 
-For the inverse, replace `X-Vector` with `X-Vector-Inverse`.
+To use another variant, replace `X-Vector` with `X-Vector-Inverse`,
+`X-Vector-Meta` or `X-Vector-Meta-Inverse`.
 
 If you use Hyprland's Lua configuration, the equivalent is:
 

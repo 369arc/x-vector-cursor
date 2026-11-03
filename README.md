@@ -23,6 +23,24 @@ the outline keeps it readable on dark pages.
   <img src="previews/x-vector-inverse-gray.png" width="160" alt="X-Vector-Inverse on gray">
 </p>
 
+**X-Vector-Meta** — rhombic horizontal and vertical axes, the classic X
+diagonals, and an eight-point centre. Built for dark desktops.
+
+<p align="center">
+  <img src="previews/x-vector-meta-black.png" width="160" alt="X-Vector-Meta on black">
+  <img src="previews/x-vector-meta-white.png" width="160" alt="X-Vector-Meta on white">
+  <img src="previews/x-vector-meta-gray.png" width="160" alt="X-Vector-Meta on gray">
+</p>
+
+**X-Vector-Meta-Inverse** — the Meta geometry with inverted tones. Built for
+light desktops.
+
+<p align="center">
+  <img src="previews/x-vector-meta-inverse-black.png" width="160" alt="X-Vector-Meta-Inverse on black">
+  <img src="previews/x-vector-meta-inverse-white.png" width="160" alt="X-Vector-Meta-Inverse on white">
+  <img src="previews/x-vector-meta-inverse-gray.png" width="160" alt="X-Vector-Meta-Inverse on gray">
+</p>
+
 Preview tiles use a 36×36 canvas: the 28 px cursor plus 4 px breathing room on every side.
 
 ## Design
@@ -32,14 +50,21 @@ Preview tiles use a 36×36 canvas: the 28 px cursor plus 4 px breathing room on 
 - Four diagonals: **14 px**.
 - `X-Vector`: white **1 px** core; black **1 px** outline.
 - `X-Vector-Inverse`: black **1 px** core; white **1 px** outline.
+- `X-Vector-Meta`: rhombic axes; **3 px** rhombus core with a **1 px** outline
+  at the 28 px size; the centre is an eight-point figure (a 3×3 square plus a
+  5 px rhombus). The diagonals stay the classic X.
+- Meta geometry snaps to whole pixels. A rotated 1×1 square is smaller than a
+  pixel at 28 px and would average to gray, so the smallest crisp rhombus is
+  used instead. No anti-aliasing is applied.
 - No centre dot.
 - Static XCursor; no motion trail and no per-click animation (XCursor cannot
   receive global mouse-button events).
 
-Each variant is a two-tone cursor. On a matching background one layer
-disappears, while the other keeps the star visible. `X-Vector` favors dark
-desktops; `X-Vector-Inverse` favors light ones. On mid-gray both layers are
-visible — the unavoidable compromise of a two-tone cursor.
+All four variants are two-tone cursors. On a matching background one layer
+disappears, while the other keeps the star visible. `X-Vector` and
+`X-Vector-Meta` favor dark desktops; the two `-Inverse` variants favor light
+ones. On mid-gray both layers are visible — the unavoidable compromise of a
+two-tone cursor.
 
 The text cursor is a three-stripe vertical sandwich, 8 px shorter than the
 nominal cursor. `X-Vector` uses black-white-black; the inverse uses
@@ -58,7 +83,8 @@ from the same star geometry.
 
 ## Release
 
-Current version: **1.3.0** — added Linux, Windows and macOS setup guides.
+Current version: **1.3.0** — Linux, Windows and macOS packages, including the
+`Meta` star family.
 Older releases are deprecated; use the latest one.
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
@@ -75,11 +101,15 @@ cd x-vector-cursor
 ./install.sh
 ```
 
-The script installs both variants and applies `X-Vector`. To apply the inverse:
+The script installs all four variants and applies `X-Vector`. To apply the
+Meta star:
 
 ```bash
-./install.sh X-Vector-Inverse
+./install.sh X-Vector-Meta
 ```
+
+For the inverse or Meta-Inverse, pass `X-Vector-Inverse` or
+`X-Vector-Meta-Inverse`.
 
 For Hyprland, GNOME, KDE Plasma, XFCE, Cinnamon, MATE, generic X11, GTK and
 Flatpak instructions, see [docs/linux.md](docs/linux.md).
@@ -101,7 +131,7 @@ Requires Python 3 (no external Python packages).
 ./build.sh
 ```
 
-This regenerates both XCursor themes and the Windows/macOS assets in
+This regenerates all four XCursor themes and the Windows/macOS assets in
 `platforms/`.
 
 ## Uninstall

@@ -5,7 +5,10 @@
 - Added a Linux setup guide for Hyprland, GNOME, Cinnamon, MATE, XFCE,
   KDE Plasma, generic X11, GTK and Flatpak.
 - Added a Windows `.cur` package with a PowerShell installer.
-- Added macOS Mousecape `.cape` packages for both variants.
+- Added macOS Mousecape `.cape` packages for all variants.
+- Added **X-Vector-Meta** and **X-Vector-Meta-Inverse**: rhombic horizontal
+  and vertical axes, an eight-point centre, and the classic X diagonals. The
+  Meta geometry snaps to whole pixels and uses no anti-aliasing.
 - `build.sh` now regenerates the Linux, Windows and macOS assets.
 
 ## 1.2.0 — 2026-11-02
