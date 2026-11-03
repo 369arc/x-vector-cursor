@@ -12,7 +12,7 @@ cd x-vector-cursor
 ./install.sh
 ```
 
-This installs all four variants to
+This installs all six variants to
 `${XDG_DATA_HOME:-$HOME/.local/share}/icons` and applies `X-Vector` in the
 current Hyprland session when `hyprctl` is available.
 
@@ -22,6 +22,8 @@ To apply another variant:
 ./install.sh X-Vector-Inverse
 ./install.sh X-Vector-Meta
 ./install.sh X-Vector-Meta-Inverse
+./install.sh X-Vector-Meta-Link
+./install.sh X-Vector-Meta-Link-Inverse
 ```
 
 Some older applications only look in the legacy `~/.icons` directory. If a
@@ -30,7 +32,7 @@ program does not see the theme, add symlinks:
 ```bash
 ICONS="${XDG_DATA_HOME:-$HOME/.local/share}/icons"
 mkdir -p ~/.icons
-for theme in X-Vector X-Vector-Inverse X-Vector-Meta X-Vector-Meta-Inverse; do
+for theme in X-Vector X-Vector-Inverse X-Vector-Meta X-Vector-Meta-Inverse X-Vector-Meta-Link X-Vector-Meta-Link-Inverse; do
   ln -sfn "$ICONS/$theme" ~/.icons/$theme
 done
 ```
@@ -47,7 +49,8 @@ env = HYPRCURSOR_SIZE,28
 ```
 
 To use another variant, replace `X-Vector` with `X-Vector-Inverse`,
-`X-Vector-Meta` or `X-Vector-Meta-Inverse`.
+`X-Vector-Meta`, `X-Vector-Meta-Inverse`, `X-Vector-Meta-Link` or
+`X-Vector-Meta-Link-Inverse`.
 
 If you use Hyprland's Lua configuration, the equivalent is:
 
@@ -181,7 +184,7 @@ environment's cursor-size setting if you prefer another size.
 ./build.sh
 ```
 
-This regenerates both XCursor themes plus the Windows and macOS assets.
+This regenerates all six XCursor themes plus the Windows and macOS assets.
 
 ## Uninstall
 

@@ -3,12 +3,14 @@
 Windows does not read Linux XCursor themes. This folder contains the same
 eight-point star converted to Windows `.cur` files.
 
-All four variants are included:
+All six variants are included:
 
 - `X-Vector` — white core, black outline;
 - `X-Vector-Inverse` — black core, white outline;
 - `X-Vector-Meta` — rhombic axes, white core, black outline;
-- `X-Vector-Meta-Inverse` — rhombic axes, black core, white outline.
+- `X-Vector-Meta-Inverse` — rhombic axes, black core, white outline;
+- `X-Vector-Meta-Link` — linked rhombic axes, white core, black outline;
+- `X-Vector-Meta-Link-Inverse` — linked rhombic axes, black core, white outline.
 
 ## Quick install
 
@@ -25,6 +27,8 @@ For another variant:
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Inverse
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta-Inverse
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta-Link
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta-Link-Inverse
 ```
 
 The script copies the cursors to `%LOCALAPPDATA%\X-Vector\Cursors` and sets

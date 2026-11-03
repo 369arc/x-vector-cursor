@@ -7,7 +7,9 @@ from the same X-Vector star.
 - `X-Vector.cape` — white core, black outline;
 - `X-Vector-Inverse.cape` — black core, white outline;
 - `X-Vector-Meta.cape` — rhombic axes, white core, black outline;
-- `X-Vector-Meta-Inverse.cape` — rhombic axes, black core, white outline.
+- `X-Vector-Meta-Inverse.cape` — rhombic axes, black core, white outline;
+- `X-Vector-Meta-Link.cape` — linked rhombic axes, white core, black outline;
+- `X-Vector-Meta-Link-Inverse.cape` — linked rhombic axes, black core, white outline.
 
 ## Install
 

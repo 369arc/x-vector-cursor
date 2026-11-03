@@ -5,6 +5,8 @@ Eight-point star:
   - main vertical/horizontal axes: size - 4 px;
   - diagonals: half the cursor size;
   - 1 px core + 1 px outline in opposite tones;
+  - Meta variants use rhombic axial beads; Link also bridges the four
+    axial separators so the arms meet the centre;
   - text cursor: a three-stripe vertical sandwich, 8 px shorter.
 No motion trail or click animation: XCursor cannot do that.
 
@@ -13,6 +15,8 @@ Usage:
   python3 make_x_vector.py X-Vector-Inverse
   python3 make_x_vector.py X-Vector-Meta
   python3 make_x_vector.py X-Vector-Meta-Inverse
+  python3 make_x_vector.py X-Vector-Meta-Link
+  python3 make_x_vector.py X-Vector-Meta-Link-Inverse
 """
 
 from __future__ import annotations
@@ -70,6 +74,20 @@ VARIANTS = {
         comment="Black eight-point star with rhombic axes and white outline",
         geometry="meta",
     ),
+    "X-Vector-Meta-Link": Variant(
+        core=WHITE,
+        outline=BLACK,
+        text=(BLACK, WHITE, BLACK),
+        comment="White eight-point star with linked rhombic axes and black outline",
+        geometry="meta-link",
+    ),
+    "X-Vector-Meta-Link-Inverse": Variant(
+        core=BLACK,
+        outline=WHITE,
+        text=(WHITE, BLACK, WHITE),
+        comment="Black eight-point star with linked rhombic axes and white outline",
+        geometry="meta-link",
+    ),
 }
 
 
@@ -109,6 +127,8 @@ def star_image(size: int, core: bytes, outline: bytes,
                geometry: str = "classic") -> bytearray:
     if geometry == "meta":
         return meta_image(size, core, outline)
+    if geometry == "meta-link":
+        return meta_link_image(size, core, outline)
     buf = blank(size)
     c = size // 2
     main = size - 4
@@ -183,6 +203,28 @@ def meta_image(size: int, core: bytes, outline: bytes) -> bytearray:
     for d in range(first, last + 1, step):
         for sx, sy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             diamond(c + sx * d, c + sy * d, bead_r, core)
+    return buf
+
+
+def meta_link_image(size: int, core: bytes, outline: bytes) -> bytearray:
+    """Meta with the four axial separators bridged by one core pixel.
+
+    The bridge sits at the outer edge of the centre outline. It merges the
+    four cardinal points of the centre with the axial rays, so the arms read
+    as connected. The diagonal points and the outer contour are unchanged.
+    """
+    buf = meta_image(size, core, outline)
+    scale = size / 28.0
+    center_dia = max(2, round(2 * scale))
+    c = size // 2
+    bridge = center_dia + 1
+    for x, y in (
+        (c - bridge, c),
+        (c + bridge, c),
+        (c, c - bridge),
+        (c, c + bridge),
+    ):
+        put(buf, size, x, y, core)
     return buf
 
 
