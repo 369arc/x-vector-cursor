@@ -15,8 +15,8 @@ Usage:
   python3 make_x_vector.py X-Vector-Inverse
   python3 make_x_vector.py X-Vector-Meta
   python3 make_x_vector.py X-Vector-Meta-Inverse
-  python3 make_x_vector.py X-Vector-Meta-Link
-  python3 make_x_vector.py X-Vector-Meta-Link-Inverse
+  python3 make_x_vector.py X-Vector-Link
+  python3 make_x_vector.py X-Vector-Link-Inverse
 """
 
 from __future__ import annotations
@@ -74,19 +74,19 @@ VARIANTS = {
         comment="Black eight-point star with rhombic axes and white outline",
         geometry="meta",
     ),
-    "X-Vector-Meta-Link": Variant(
+    "X-Vector-Link": Variant(
         core=WHITE,
         outline=BLACK,
         text=(BLACK, WHITE, BLACK),
         comment="White eight-point star with linked rhombic axes and black outline",
-        geometry="meta-link",
+        geometry="link",
     ),
-    "X-Vector-Meta-Link-Inverse": Variant(
+    "X-Vector-Link-Inverse": Variant(
         core=BLACK,
         outline=WHITE,
         text=(WHITE, BLACK, WHITE),
         comment="Black eight-point star with linked rhombic axes and white outline",
-        geometry="meta-link",
+        geometry="link",
     ),
 }
 
@@ -127,8 +127,8 @@ def star_image(size: int, core: bytes, outline: bytes,
                geometry: str = "classic") -> bytearray:
     if geometry == "meta":
         return meta_image(size, core, outline)
-    if geometry == "meta-link":
-        return meta_link_image(size, core, outline)
+    if geometry == "link":
+        return link_image(size, core, outline)
     buf = blank(size)
     c = size // 2
     main = size - 4
@@ -206,8 +206,8 @@ def meta_image(size: int, core: bytes, outline: bytes) -> bytearray:
     return buf
 
 
-def meta_link_image(size: int, core: bytes, outline: bytes) -> bytearray:
-    """Meta with the four axial separators bridged by one core pixel.
+def link_image(size: int, core: bytes, outline: bytes) -> bytearray:
+    """Linked-axis star with the four axial separators bridged by one pixel.
 
     The bridge sits at the outer edge of the centre outline. It merges the
     four cardinal points of the centre with the axial rays, so the arms read

@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('X-Vector', 'X-Vector-Inverse', 'X-Vector-Meta', 'X-Vector-Meta-Inverse', 'X-Vector-Meta-Link', 'X-Vector-Meta-Link-Inverse')]
+    [ValidateSet('X-Vector', 'X-Vector-Inverse', 'X-Vector-Meta', 'X-Vector-Meta-Inverse', 'X-Vector-Link', 'X-Vector-Link-Inverse')]
     [string]$Variant = 'X-Vector',
     [switch]$Uninstall
 )

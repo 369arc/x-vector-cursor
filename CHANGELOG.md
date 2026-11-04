@@ -9,7 +9,7 @@
 - Added **X-Vector-Meta** and **X-Vector-Meta-Inverse**: rhombic horizontal
   and vertical axes, an eight-point centre, and the classic X diagonals. The
   Meta geometry snaps to whole pixels and uses no anti-aliasing.
-- Added **X-Vector-Meta-Link** and **X-Vector-Meta-Link-Inverse**: the same
+- Added **X-Vector-Link** and **X-Vector-Link-Inverse**: the same
   geometry with the four axial separators bridged, so the arms meet the
   centre.
 - `build.sh` now regenerates the Linux, Windows and macOS assets.

@@ -22,8 +22,8 @@ To apply another variant:
 ./install.sh X-Vector-Inverse
 ./install.sh X-Vector-Meta
 ./install.sh X-Vector-Meta-Inverse
-./install.sh X-Vector-Meta-Link
-./install.sh X-Vector-Meta-Link-Inverse
+./install.sh X-Vector-Link
+./install.sh X-Vector-Link-Inverse
 ```
 
 Some older applications only look in the legacy `~/.icons` directory. If a
@@ -32,7 +32,7 @@ program does not see the theme, add symlinks:
 ```bash
 ICONS="${XDG_DATA_HOME:-$HOME/.local/share}/icons"
 mkdir -p ~/.icons
-for theme in X-Vector X-Vector-Inverse X-Vector-Meta X-Vector-Meta-Inverse X-Vector-Meta-Link X-Vector-Meta-Link-Inverse; do
+for theme in X-Vector X-Vector-Inverse X-Vector-Meta X-Vector-Meta-Inverse X-Vector-Link X-Vector-Link-Inverse; do
   ln -sfn "$ICONS/$theme" ~/.icons/$theme
 done
 ```
@@ -49,8 +49,8 @@ env = HYPRCURSOR_SIZE,28
 ```
 
 To use another variant, replace `X-Vector` with `X-Vector-Inverse`,
-`X-Vector-Meta`, `X-Vector-Meta-Inverse`, `X-Vector-Meta-Link` or
-`X-Vector-Meta-Link-Inverse`.
+`X-Vector-Meta`, `X-Vector-Meta-Inverse`, `X-Vector-Link` or
+`X-Vector-Link-Inverse`.
 
 If you use Hyprland's Lua configuration, the equivalent is:
 

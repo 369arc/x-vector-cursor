@@ -9,8 +9,8 @@ All six variants are included:
 - `X-Vector-Inverse` — black core, white outline;
 - `X-Vector-Meta` — rhombic axes, white core, black outline;
 - `X-Vector-Meta-Inverse` — rhombic axes, black core, white outline;
-- `X-Vector-Meta-Link` — linked rhombic axes, white core, black outline;
-- `X-Vector-Meta-Link-Inverse` — linked rhombic axes, black core, white outline.
+- `X-Vector-Link` — linked rhombic axes, white core, black outline;
+- `X-Vector-Link-Inverse` — linked rhombic axes, black core, white outline.
 
 ## Quick install
 
@@ -27,8 +27,8 @@ For another variant:
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Inverse
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta-Inverse
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta-Link
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Meta-Link-Inverse
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Link
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Variant X-Vector-Link-Inverse
 ```
 
 The script copies the cursors to `%LOCALAPPDATA%\X-Vector\Cursors` and sets
