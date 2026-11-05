@@ -1,8 +1,8 @@
 # X-Vector on Linux
 
-X-Vector is a native XCursor theme. It works on X11 and on Wayland
-compositors that use XCursor, including Hyprland, Sway/wlroots, GNOME and
-KDE Plasma.
+X-Vector is a native XCursor theme with native Hyprland hyprcursor data. It
+works on X11, on Wayland compositors that use XCursor, and natively on
+Hyprland, Sway/wlroots, GNOME and KDE Plasma.
 
 ## Install
 
@@ -47,6 +47,10 @@ env = XCURSOR_SIZE,28
 env = HYPRCURSOR_THEME,X-Vector
 env = HYPRCURSOR_SIZE,28
 ```
+
+Each theme includes native hyprcursor data. Hyprland uses
+`HYPRCURSOR_THEME` and the native SVG cursor; `XCURSOR_THEME` remains the
+fallback for GTK, Qt and XWayland applications.
 
 To use another variant, replace `X-Vector` with `X-Vector-Inverse`,
 `X-Vector-Meta`, `X-Vector-Meta-Inverse`, `X-Vector-Link` or
@@ -180,11 +184,14 @@ environment's cursor-size setting if you prefer another size.
 
 ## Build
 
+Requires Python 3 and `hyprcursor-util` (from the `hyprcursor` package).
+
 ```bash
 ./build.sh
 ```
 
-This regenerates all six XCursor themes plus the Windows and macOS assets.
+This regenerates all six XCursor themes, their native hyprcursor data, plus the
+Windows and macOS assets.
 
 ## Uninstall
 

@@ -284,26 +284,28 @@ def write_cursor(cursors: Path, name: str, factory, special: bool = False) -> No
     (cursors / name).write_bytes(xcursor(images))
 
 
+ALIASES = {
+    "left_ptr": "default", "arrow": "default", "top_left_arrow": "default",
+    "crosshair": "default", "cross": "default", "cell": "default",
+    "move": "default", "all-scroll": "default",
+    "col-resize": "default", "row-resize": "default",
+    "n-resize": "default", "s-resize": "default",
+    "e-resize": "default", "w-resize": "default",
+    "ne-resize": "default", "nw-resize": "default",
+    "se-resize": "default", "sw-resize": "default",
+    "ew-resize": "default", "ns-resize": "default",
+    "nesw-resize": "default", "nwse-resize": "default",
+    "zoom-in": "default", "zoom-out": "default",
+    "context-menu": "default", "help": "default",
+    "wait": "default", "progress": "default",
+    "hand1": "pointer", "hand2": "pointer", "link": "pointer", "alias": "pointer",
+    "xterm": "text", "vertical-text": "text",
+    "no-drop": "not-allowed", "forbidden": "not-allowed",
+}
+
+
 def populate_aliases(cursors: Path) -> None:
-    aliases = {
-        "left_ptr": "default", "arrow": "default", "top_left_arrow": "default",
-        "crosshair": "default", "cross": "default", "cell": "default",
-        "move": "default", "all-scroll": "default",
-        "col-resize": "default", "row-resize": "default",
-        "n-resize": "default", "s-resize": "default",
-        "e-resize": "default", "w-resize": "default",
-        "ne-resize": "default", "nw-resize": "default",
-        "se-resize": "default", "sw-resize": "default",
-        "ew-resize": "default", "ns-resize": "default",
-        "nesw-resize": "default", "nwse-resize": "default",
-        "zoom-in": "default", "zoom-out": "default",
-        "context-menu": "default", "help": "default",
-        "wait": "default", "progress": "default",
-        "hand1": "pointer", "hand2": "pointer", "link": "pointer", "alias": "pointer",
-        "xterm": "text", "vertical-text": "text",
-        "no-drop": "not-allowed", "forbidden": "not-allowed",
-    }
-    for alias, target in aliases.items():
+    for alias, target in ALIASES.items():
         link = cursors / alias
         try:
             link.symlink_to(target)

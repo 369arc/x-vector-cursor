@@ -12,6 +12,10 @@
 - Added **X-Vector-Link** and **X-Vector-Link-Inverse**: the same
   geometry with the four axial separators bridged, so the arms meet the
   centre.
+- Linux themes now include native Hyprland hyprcursor data. The SVG is
+  generated from the same 28 px pixel map with `shape-rendering="crispEdges"`
+  and `resize_algorithm = nearest`; GTK, Qt and XWayland keep using the
+  XCursor tree.
 - `build.sh` now regenerates the Linux, Windows and macOS assets.
 
 ## 1.2.0 — 2026-11-02

@@ -77,6 +77,10 @@ Preview tiles use a 36×36 canvas: the 28 px cursor plus 4 px breathing room on 
 - Meta and Link geometry snap to whole pixels. A rotated 1×1 square is smaller
   than a pixel at 28 px and would average to gray, so the smallest crisp
   rhombus is used instead. No anti-aliasing is applied.
+- Linux themes carry both XCursor and hyprcursor data. The hyprcursor SVG is
+  built from 1×1 rects on the 28 px grid with `shape-rendering="crispEdges"`
+  and `resize_algorithm = nearest`, so Hyprland gets the same crisp pixel art
+  without bitmap resampling.
 - No centre dot.
 - Static XCursor; no motion trail and no per-click animation (XCursor cannot
   receive global mouse-button events).
@@ -95,12 +99,15 @@ white-black-white. Both survive dark and light input fields.
 
 | Platform | Format | Guide |
 | --- | --- | --- |
-| Linux | XCursor | [Linux setup](docs/linux.md) |
+| Linux | XCursor + native Hyprland hyprcursor | [Linux setup](docs/linux.md) |
 | Windows | `.cur` + PowerShell installer | [Windows setup](platforms/windows/README.md) |
 | macOS | Mousecape `.cape` | [macOS setup](platforms/macos/README.md) |
 
-X-Vector is native on Linux. Windows and macOS use converted formats generated
-from the same star geometry.
+X-Vector is native on Linux. Each theme directory contains both the XCursor
+tree for GTK, Qt and XWayland and a hyprcursor tree for Hyprland. Hyprland uses
+the SVG-based native cursor; the XCursor copy remains the fallback for other
+applications. Windows and macOS use converted formats generated from the same
+star geometry.
 
 ## Release
 
@@ -152,14 +159,15 @@ macOS needs a Mousecape cape: [platforms/macos/README.md](platforms/macos/README
 
 ## Build
 
-Requires Python 3 (no external Python packages).
+Requires Python 3 and `hyprcursor-util` (from the `hyprcursor` package) for the
+native Hyprland output.
 
 ```bash
 ./build.sh
 ```
 
-This regenerates all six XCursor themes and the Windows/macOS assets in
-`platforms/`.
+This regenerates all six XCursor themes, their native hyprcursor data, and the
+Windows/macOS assets in `platforms/`.
 
 ## Uninstall
 
